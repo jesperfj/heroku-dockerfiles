@@ -8,4 +8,4 @@ RUN mkdir -p /app/heroku && \
     curl -s https://s3pository.heroku.com/node/v$NODE_ENGINE/node-v$NODE_ENGINE-linux-x64.tar.gz | tar xvz -C /tmp && \
     mv /tmp/node-v$NODE_ENGINE-linux-x64 /app/heroku/node
 
-ADD . /app
+ADD src /app
