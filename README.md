@@ -50,3 +50,20 @@ RUN npm install
 COPY . /app/
 ```
 
+# Running apps that pick up changes immediately
+
+For interpreted languages like Node.js, Ruby and PHP, it is common to configure your local environment to pick up changes to files in your project directory without having to restart the server or rebuild anything. This makes for a very snappy development experience.
+
+In this proposal, you accomplish this with a separately derived container. It's currently only implemented for Node.js. In your Node app directory, do:
+
+```
+docker run -it -v `pwd`:/app/src -p 5000:5000 heroku/node-inplace:0.12.2 npm install
+```
+
+This will pull down dependencies (without you having to install node or npm locally, it runs in the container). Now you can start the server:
+
+```
+docker run -it -v `pwd`:/app/src -p 5000:5000 heroku/node-inplace:0.12.2
+```
+
+heroku/node-inplace installs nodemon and runs it with no arguments as CMD. nodemon will read package.json to find out what to execute.
